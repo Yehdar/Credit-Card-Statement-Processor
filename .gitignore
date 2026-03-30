@@ -1,0 +1,8 @@
+# Go backend
+backend/.env
+backend/go.sum
+
+# Next.js frontend
+frontend/.env.local
+frontend/.next/
+frontend/node_modules/
