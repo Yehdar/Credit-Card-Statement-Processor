@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -159,6 +160,10 @@ type geminiResponse struct {
 
 // Analyze sends statementText to Gemini and returns a parsed WrappedResponse.
 func Analyze(ctx context.Context, apiKey, statementText string) (*models.WrappedResponse, error) {
+	if os.Getenv("USE_MOCK_GEMINI") == "true" {
+		return mockResponse(), nil
+	}
+
 	reqBody := geminiRequest{
 		SystemInstruction: geminiContent{
 			Parts: []geminiPart{{Text: systemPrompt}},
@@ -227,6 +232,47 @@ func Analyze(ctx context.Context, apiKey, statementText string) (*models.Wrapped
 	}
 
 	return &wrapped, nil
+}
+
+func mockResponse() *models.WrappedResponse {
+	name := "Alex Johnson"
+	return &models.WrappedResponse{
+		MetaData: models.MetaData{
+			AccountHolder: &name,
+			PersonaTitle:  "Brunch Economist",
+			VibeCheck:     "You budget like a poet and spend like a chef.",
+		},
+		StatsSummary: models.StatsSummary{
+			TotalSpent:       1842.75,
+			TopCategory:      "Dining",
+			TransactionCount: 34,
+		},
+		WrappedSlides: []models.Slide{
+			{
+				SlideType: "top_merchant",
+				Headline:  "You basically live here.",
+				MainStat:  "$312.50 at Whole Foods",
+				Context:   "8 visits — that's basically twice a week.",
+			},
+			{
+				SlideType: "night_owl",
+				Headline:  "You really love midnight snacks.",
+				MainStat:  "6 late-night transactions",
+				Context:   "$94.20 spent after 10pm. No regrets.",
+			},
+			{
+				SlideType: "big_flex",
+				Headline:  "Bold move. We respect it.",
+				MainStat:  "$289.00 at Apple Store",
+				Context:   "That's 15.7% of your entire month.",
+			},
+		},
+		RewardsEngine: models.RewardsEngine{
+			PointsEarned:    4820,
+			MissedBag:       4391,
+			OptimizationTip: "Switch dining spend to Amex Cobalt for 5x points — you'd earn ~1,560 extra points per month.",
+		},
+	}
 }
 
 // extractJSON strips markdown code fences and finds the outermost JSON object.
