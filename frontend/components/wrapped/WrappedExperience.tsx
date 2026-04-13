@@ -12,7 +12,7 @@ interface WrappedExperienceProps {
 export function WrappedExperience({ data, onRestart }: WrappedExperienceProps) {
   return (
     <motion.div
-      className="min-h-screen bg-gray-950 flex flex-col"
+      className="h-screen bg-gray-950 flex flex-col"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
@@ -27,7 +27,7 @@ export function WrappedExperience({ data, onRestart }: WrappedExperienceProps) {
         </div>
         <button
           onClick={onRestart}
-          className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+          className="text-xs font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors px-3 py-1.5 rounded-full"
         >
           New Statement
         </button>

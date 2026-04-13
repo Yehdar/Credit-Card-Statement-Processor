@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { WrappedResponse } from "@/types/wrapped";
 import { IntroSlide } from "./slides/IntroSlide";
@@ -61,6 +61,20 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
   const goNext = useCallback(() => goTo(currentIndex + 1), [currentIndex, goTo]);
   const goPrev = useCallback(() => goTo(currentIndex - 1), [currentIndex, goTo]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space" || e.code === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+      } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [goNext, goPrev]);
+
   // Swipe handling
   const handleDragEnd = useCallback(
     (_: unknown, info: { offset: { x: number } }) => {
@@ -117,7 +131,7 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
         {currentIndex > 0 && (
           <button
             onClick={goPrev}
-            className="absolute left-0 top-0 h-full w-16 z-10 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity"
+            className="absolute left-0 top-0 h-full w-16 z-10 opacity-100 flex items-center justify-center"
             aria-label="Previous slide"
           >
             <div className="bg-black/40 rounded-full p-2">
@@ -130,7 +144,7 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
         {!isLast && (
           <button
             onClick={goNext}
-            className="absolute right-0 top-0 h-full w-16 z-10 opacity-0 hover:opacity-100 flex items-center justify-center transition-opacity"
+            className="absolute right-0 top-0 h-full w-16 z-10 opacity-100 flex items-center justify-center"
             aria-label="Next slide"
           >
             <div className="bg-black/40 rounded-full p-2">

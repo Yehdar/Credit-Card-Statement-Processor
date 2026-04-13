@@ -57,7 +57,7 @@ export function IntroSlide({ data }: IntroSlideProps) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.6 }}
       >
-        Swipe or tap → to continue
+        press spacebar or arrow keys to continue
       </motion.p>
     </div>
   );
