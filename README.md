@@ -2,6 +2,10 @@
 
 A "Spotify Wrapped"-style credit card statement analyzer. Paste raw statement text and get an animated, slide-by-slide breakdown of your spending — persona, stats, top merchant, night owl habits, biggest flex, and Canadian rewards optimization.
 
+## Demo
+
+<p align="center"><img src="https://github.com/Yehdar/Credit-Card-Statement-Processor/blob/master/demo/demo.png" width="80%"></p>
+
 ## Tech Stack
 
 | Layer | Tech |

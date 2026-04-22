@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0D0D0D;
+  --background: #111814;
   --foreground: #FFFFFF;
 
   /* Wealthsimple design tokens */
-  --ws-bg: #0D0D0D;
+  --ws-bg: #111814;
   --ws-surface: #383838;
   --ws-surface-raised: #444444;
   --ws-border: rgba(255, 255, 255, 0.10);

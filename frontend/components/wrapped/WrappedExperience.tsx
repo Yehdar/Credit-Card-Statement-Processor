@@ -22,7 +22,7 @@ export function WrappedExperience({ data, onRestart }: WrappedExperienceProps) {
       <div
         className="flex items-center justify-between px-6 py-4 z-20 backdrop-blur-sm"
         style={{
-          background: "rgba(13,13,13,0.85)",
+          background: "rgba(17,24,20,0.85)",
           borderBottom: "1px solid var(--ws-border)",
         }}
       >
