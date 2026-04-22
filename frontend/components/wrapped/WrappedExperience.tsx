@@ -12,22 +12,45 @@ interface WrappedExperienceProps {
 export function WrappedExperience({ data, onRestart }: WrappedExperienceProps) {
   return (
     <motion.div
-      className="h-screen bg-gray-950 flex flex-col"
+      className="h-screen flex flex-col"
+      style={{ background: "var(--ws-bg)" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
       {/* Top bar */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 bg-gray-950/80 backdrop-blur-sm z-20">
+      <div
+        className="flex items-center justify-between px-6 py-4 z-20 backdrop-blur-sm"
+        style={{
+          background: "rgba(13,13,13,0.85)",
+          borderBottom: "1px solid var(--ws-border)",
+        }}
+      >
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-emerald-400" />
-          <span className="text-white text-sm font-bold tracking-tight">
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{ background: "var(--ws-green)" }}
+          />
+          <span className="text-sm font-bold tracking-tight" style={{ color: "var(--ws-text-primary)" }}>
             Spending Wrapped
           </span>
         </div>
         <button
           onClick={onRestart}
-          className="text-xs font-semibold text-white bg-white/10 hover:bg-white/20 transition-colors px-3 py-1.5 rounded-full"
+          className="text-xs font-semibold px-3 py-1.5 rounded-full transition-colors"
+          style={{
+            background: "var(--ws-surface)",
+            border: "1px solid var(--ws-border)",
+            color: "var(--ws-text-secondary)",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--ws-text-primary)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "var(--ws-text-secondary)";
+            e.currentTarget.style.borderColor = "var(--ws-border)";
+          }}
         >
           New Statement
         </button>

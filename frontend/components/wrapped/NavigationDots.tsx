@@ -19,10 +19,13 @@ export function NavigationDots({
         <motion.button
           key={i}
           onClick={() => onDotClick(i)}
-          className="h-2 rounded-full bg-white/40 hover:bg-white/70 transition-colors"
+          className="h-2 rounded-full transition-colors"
+          style={{
+            background: i === current ? "var(--ws-green)" : "rgba(255,255,255,0.2)",
+          }}
           animate={{
             width: i === current ? 24 : 8,
-            opacity: i === current ? 1 : 0.4,
+            opacity: i === current ? 1 : 0.5,
           }}
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
           aria-label={`Go to slide ${i + 1}`}

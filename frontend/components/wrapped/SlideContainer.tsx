@@ -34,7 +34,6 @@ const slideVariants = {
   }),
 };
 
-// Build the ordered slide list from the response
 function buildSlides(data: WrappedResponse) {
   return [
     { id: "intro" },
@@ -75,7 +74,6 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [goNext, goPrev]);
 
-  // Swipe handling
   const handleDragEnd = useCallback(
     (_: unknown, info: { offset: { x: number } }) => {
       if (info.offset.x < -80) goNext();
@@ -131,10 +129,10 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
         {currentIndex > 0 && (
           <button
             onClick={goPrev}
-            className="absolute left-0 top-0 h-full w-16 z-10 opacity-100 flex items-center justify-center"
+            className="absolute left-0 top-0 h-full w-16 z-10 flex items-center justify-center"
             aria-label="Previous slide"
           >
-            <div className="bg-black/40 rounded-full p-2">
+            <div className="rounded-full p-2" style={{ background: "rgba(0,0,0,0.4)" }}>
               <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -144,10 +142,10 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
         {!isLast && (
           <button
             onClick={goNext}
-            className="absolute right-0 top-0 h-full w-16 z-10 opacity-100 flex items-center justify-center"
+            className="absolute right-0 top-0 h-full w-16 z-10 flex items-center justify-center"
             aria-label="Next slide"
           >
-            <div className="bg-black/40 rounded-full p-2">
+            <div className="rounded-full p-2" style={{ background: "rgba(0,0,0,0.4)" }}>
               <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
@@ -157,7 +155,13 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
       </div>
 
       {/* Bottom bar */}
-      <div className="bg-gray-950 border-t border-white/5 flex items-center justify-between px-4">
+      <div
+        className="flex items-center justify-between px-4"
+        style={{
+          background: "var(--ws-bg)",
+          borderTop: "1px solid var(--ws-border)",
+        }}
+      >
         <NavigationDots
           total={slides.length}
           current={currentIndex}
@@ -166,7 +170,10 @@ export function SlideContainer({ data, onRestart }: SlideContainerProps) {
         {isLast && (
           <motion.button
             onClick={onRestart}
-            className="text-xs text-gray-500 hover:text-gray-300 transition-colors py-4"
+            className="text-xs py-4 transition-colors"
+            style={{ color: "var(--ws-text-muted)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "var(--ws-text-secondary)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "var(--ws-text-muted)"; }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
