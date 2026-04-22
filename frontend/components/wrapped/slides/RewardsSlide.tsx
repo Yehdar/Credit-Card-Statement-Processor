@@ -41,16 +41,26 @@ function CountUp({
 
 export function RewardsSlide({ data }: RewardsSlideProps) {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-yellow-950 via-amber-950 to-gray-950">
+    <div
+      className="flex flex-col items-center justify-center h-full px-8 py-12"
+      style={{ background: "var(--ws-bg)" }}
+    >
       {/* Badge */}
       <motion.div
-        className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/20 rounded-full px-4 py-1.5 mb-8 text-yellow-400"
+        className="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-8"
+        style={{
+          background: "var(--ws-green-dim)",
+          border: "1px solid var(--ws-green-border)",
+        }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.05 }}
       >
         <span>⭐</span>
-        <span className="text-xs font-semibold tracking-widest uppercase">
+        <span
+          className="text-[10px] font-semibold tracking-[0.2em] uppercase"
+          style={{ color: "var(--ws-green)" }}
+        >
           Rewards Breakdown
         </span>
       </motion.div>
@@ -58,40 +68,58 @@ export function RewardsSlide({ data }: RewardsSlideProps) {
       <div className="w-full max-w-sm space-y-4">
         {/* Points earned */}
         <motion.div
-          className="bg-white/5 border border-yellow-500/20 rounded-2xl p-5 text-center"
+          className="rounded-2xl p-5 text-center"
+          style={{
+            background: "var(--ws-surface)",
+            border: "1px solid var(--ws-green-border)",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <p className="text-yellow-400/70 text-xs font-semibold tracking-widest uppercase mb-2">
+          <p
+            className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+            style={{ color: "var(--ws-text-muted)" }}
+          >
             Points Earned
           </p>
-          <div className="text-5xl font-black text-yellow-300">
+          <div className="text-5xl font-black tabular-nums" style={{ color: "var(--ws-green)" }}>
             <CountUp to={data.points_earned} />
           </div>
         </motion.div>
 
         {/* Missed bag */}
         <motion.div
-          className="bg-white/5 border border-gray-700 rounded-2xl p-5 text-center"
+          className="rounded-2xl p-5 text-center"
+          style={{
+            background: "var(--ws-surface)",
+            border: "1px solid var(--ws-border)",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
         >
-          <p className="text-gray-500 text-xs font-semibold tracking-widest uppercase mb-2">
+          <p
+            className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+            style={{ color: "var(--ws-text-muted)" }}
+          >
             Points Left on the Table
           </p>
-          <div className="text-4xl font-black text-gray-400">
+          <div className="text-4xl font-black tabular-nums" style={{ color: "var(--ws-text-secondary)" }}>
             <CountUp to={data.missed_bag} />
           </div>
-          <p className="text-gray-600 text-xs mt-1">
+          <p className="text-xs mt-1" style={{ color: "var(--ws-text-muted)" }}>
             You could have earned this much more.
           </p>
         </motion.div>
 
         {/* Optimization tip */}
         <motion.div
-          className="bg-yellow-500/10 border border-yellow-500/25 rounded-2xl p-5"
+          className="rounded-2xl p-5"
+          style={{
+            background: "var(--ws-surface-raised)",
+            border: "1px solid var(--ws-green-border)",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
@@ -99,10 +127,13 @@ export function RewardsSlide({ data }: RewardsSlideProps) {
           <div className="flex items-start gap-3">
             <span className="text-xl mt-0.5">💡</span>
             <div>
-              <p className="text-yellow-400 text-xs font-semibold tracking-widest uppercase mb-1">
+              <p
+                className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-1"
+                style={{ color: "var(--ws-green)" }}
+              >
                 Pro Tip
               </p>
-              <p className="text-yellow-200 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: "var(--ws-text-primary)" }}>
                 {data.optimization_tip}
               </p>
             </div>

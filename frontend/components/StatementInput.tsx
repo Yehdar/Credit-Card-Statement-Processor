@@ -1,14 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 interface StatementInputProps {
   onSubmit: (text: string) => void;
 }
 
+function DocumentIcon() {
+  return (
+    <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M28 2H8C5.8 2 4 3.8 4 6v40c0 2.2 1.8 4 4 4h28c2.2 0 4-1.8 4-4V18L28 2z"
+        stroke="rgba(255,255,255,0.25)"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      <path d="M28 2v16h16" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" fill="none" />
+      <line x1="12" y1="28" x2="32" y2="28" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="12" y1="34" x2="32" y2="34" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="12" y1="40" x2="24" y2="40" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function StatementInput({ onSubmit }: StatementInputProps) {
   const [text, setText] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,77 +34,117 @@ export function StatementInput({ onSubmit }: StatementInputProps) {
     if (trimmed) onSubmit(trimmed);
   };
 
+  const lineCount = text.trim() ? text.trim().split("\n").filter((l) => l.trim()).length : 0;
+
   return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-6">
+    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: "var(--ws-bg)" }}>
       <motion.div
-        className="w-full max-w-2xl"
+        className="w-full max-w-3xl"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {/* Header */}
         <div className="mb-10 text-center">
-          <motion.div
-            className="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full px-4 py-1.5 mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-emerald-400 text-xs font-semibold tracking-widest uppercase">
-              Powered by Gemini
-            </span>
-          </motion.div>
-
           <motion.h1
-            className="text-5xl font-black text-white mb-3 tracking-tight"
+            className="text-5xl font-black mb-3 tracking-tight"
+            style={{ color: "#FFFFFF" }}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.15 }}
           >
             Your Money,{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <span style={{ color: "rgba(255,255,255,0.55)" }}>
               Unwrapped.
             </span>
           </motion.h1>
           <motion.p
-            className="text-gray-400 text-lg"
+            className="text-lg"
+            style={{ color: "var(--ws-text-secondary)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.25 }}
           >
-            Paste your credit card statement and get a Spotify Wrapped–style
-            breakdown of your spending.
+            Paste your credit card statement and get a Wrapped-style breakdown of your spending.
           </motion.p>
         </div>
 
         {/* Input card */}
         <motion.form
           onSubmit={handleSubmit}
-          className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl"
+          className="rounded-2xl p-6 shadow-2xl"
+          style={{
+            background: "var(--ws-surface)",
+            border: "1px solid var(--ws-border)",
+          }}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <label className="block text-sm font-semibold text-gray-400 mb-3 tracking-wide">
-            PASTE YOUR STATEMENT
+          <label
+            className="block text-[10px] font-semibold tracking-[0.2em] uppercase mb-3"
+            style={{ color: "var(--ws-text-muted)" }}
+          >
+            Paste Your Statement
           </label>
-          <textarea
-            className="w-full h-56 bg-gray-950 border border-gray-700 rounded-xl p-4 text-gray-200 text-sm font-mono placeholder-gray-600 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-all"
-            placeholder={`Jan 5  TIM HORTONS #4521 TORONTO ON  $4.50\nJan 6  SOBEYS #0215  $62.10\nJan 7  UBER *TRIP  $18.00\nJan 8  NETFLIX.COM  $17.99\n...`}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            spellCheck={false}
-          />
+
+          {/* Drop zone */}
+          <div
+            className="relative w-full h-72 rounded-xl cursor-text"
+            style={{ border: "1.5px dashed rgba(255,255,255,0.18)" }}
+            onClick={() => textareaRef.current?.focus()}
+          >
+            {/* Visual overlay — shown when empty */}
+            {!text && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pointer-events-none select-none">
+                <DocumentIcon />
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  Click or paste your statement here
+                </p>
+              </div>
+            )}
+
+            {/* "Ready" state overlay — shown when has content */}
+            {text && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 pointer-events-none select-none">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="16" r="14" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+                  <path d="M10 16l4 4 8-8" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <p className="text-sm font-medium" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  {lineCount} line{lineCount !== 1 ? "s" : ""} loaded
+                </p>
+              </div>
+            )}
+
+            {/* Invisible textarea — handles all input */}
+            <textarea
+              ref={textareaRef}
+              className="absolute inset-0 w-full h-full bg-transparent rounded-xl p-4 resize-none focus:outline-none"
+              style={{ color: "transparent", caretColor: "rgba(255,255,255,0.7)" }}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              spellCheck={false}
+              aria-label="Statement input"
+            />
+          </div>
+
           <div className="flex items-center justify-between mt-4">
-            <p className="text-xs text-gray-600">
-              Max 50KB · Data processed by Gemini 2.0 Flash
+            <p className="text-xs" style={{ color: "var(--ws-text-muted)" }}>
+              Max 50KB 
             </p>
             <motion.button
               type="submit"
               disabled={!text.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-bold rounded-xl text-sm disabled:opacity-40 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-emerald-500/25 transition-shadow"
-              whileHover={{ scale: 1.03 }}
+              className="px-6 py-3 font-bold rounded-xl text-sm transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+              style={{
+                background: "rgba(255,255,255,0.12)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                color: "#FFFFFF",
+              }}
+              whileHover={{ scale: 1.02, background: "rgba(255,255,255,0.18)" } as never}
               whileTap={{ scale: 0.97 }}
             >
               Unwrap My Spending →

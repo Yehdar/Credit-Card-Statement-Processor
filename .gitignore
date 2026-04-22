@@ -6,3 +6,6 @@ backend/go.sum
 frontend/.env.local
 frontend/.next/
 frontend/node_modules/
+
+# Root directory
+.CLAUDE.md/

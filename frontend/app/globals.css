@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0D0D0D;
+  --foreground: #FFFFFF;
+
+  /* Wealthsimple design tokens */
+  --ws-bg: #0D0D0D;
+  --ws-surface: #383838;
+  --ws-surface-raised: #444444;
+  --ws-border: rgba(255, 255, 255, 0.10);
+  --ws-green: #00C882;
+  --ws-green-dim: rgba(0, 200, 130, 0.12);
+  --ws-green-border: rgba(0, 200, 130, 0.25);
+  --ws-text-primary: #FFFFFF;
+  --ws-text-secondary: rgba(255, 255, 255, 0.65);
+  --ws-text-muted: rgba(255, 255, 255, 0.35);
 }
 
 @theme inline {
@@ -12,15 +24,9 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--ws-bg);
+  color: var(--ws-text-primary);
   font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "tnum" 1;
 }

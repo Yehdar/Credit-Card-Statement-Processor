@@ -48,9 +48,13 @@ function CountUp({
 
 export function StatsSummarySlide({ data }: StatsSummarySlideProps) {
   return (
-    <div className="flex flex-col items-center justify-center h-full px-8 py-12 bg-gradient-to-br from-blue-950 via-indigo-950 to-gray-950">
+    <div
+      className="flex flex-col items-center justify-center h-full px-8 py-12"
+      style={{ background: "var(--ws-bg)" }}
+    >
       <motion.p
-        className="text-blue-400 text-xs font-semibold tracking-widest uppercase mb-8"
+        className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-8"
+        style={{ color: "var(--ws-text-muted)" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.05 }}
@@ -58,23 +62,26 @@ export function StatsSummarySlide({ data }: StatsSummarySlideProps) {
         By the numbers
       </motion.p>
 
-      <div className="w-full max-w-sm space-y-6">
+      <div className="w-full max-w-sm space-y-4">
         {/* Total spent */}
         <motion.div
-          className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center"
+          className="rounded-2xl p-6 text-center"
+          style={{
+            background: "var(--ws-surface)",
+            border: "1px solid var(--ws-border)",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <p className="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-2">
+          <p
+            className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+            style={{ color: "var(--ws-text-muted)" }}
+          >
             Total Spent
           </p>
-          <div className="text-5xl font-black text-white">
-            <CountUp
-              to={data.total_spent}
-              prefix="$"
-              decimals={2}
-            />
+          <div className="text-5xl font-black tabular-nums" style={{ color: "var(--ws-text-primary)" }}>
+            <CountUp to={data.total_spent} prefix="$" decimals={2} />
           </div>
         </motion.div>
 
@@ -82,36 +89,54 @@ export function StatsSummarySlide({ data }: StatsSummarySlideProps) {
         <div className="grid grid-cols-2 gap-4">
           {/* Transactions */}
           <motion.div
-            className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center"
+            className="rounded-2xl p-5 text-center"
+            style={{
+              background: "var(--ws-surface)",
+              border: "1px solid var(--ws-border)",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <p className="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-2">
+            <p
+              className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+              style={{ color: "var(--ws-text-muted)" }}
+            >
               Transactions
             </p>
-            <div className="text-4xl font-black text-white">
+            <div className="text-4xl font-black tabular-nums" style={{ color: "var(--ws-text-primary)" }}>
               <CountUp to={data.transaction_count} />
             </div>
           </motion.div>
 
           {/* Top category */}
           <motion.div
-            className="bg-white/5 border border-white/10 rounded-2xl p-5 text-center flex flex-col justify-center"
+            className="rounded-2xl p-5 text-center flex flex-col justify-center"
+            style={{
+              background: "var(--ws-surface)",
+              border: "1px solid var(--ws-border)",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <p className="text-gray-400 text-xs font-semibold tracking-widest uppercase mb-2">
+            <p
+              className="text-[10px] font-semibold tracking-[0.2em] uppercase mb-2"
+              style={{ color: "var(--ws-text-muted)" }}
+            >
               Top Category
             </p>
             <motion.div
-              className="inline-flex items-center justify-center bg-blue-500/20 border border-blue-500/30 rounded-full px-3 py-1.5"
+              className="inline-flex items-center justify-center rounded-full px-3 py-1.5"
+              style={{
+                background: "var(--ws-green-dim)",
+                border: "1px solid var(--ws-green-border)",
+              }}
               initial={{ scale: 0.7, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.5, type: "spring" }}
             >
-              <span className="text-blue-300 text-sm font-bold">
+              <span className="text-sm font-bold" style={{ color: "var(--ws-green)" }}>
                 {data.top_category}
               </span>
             </motion.div>
